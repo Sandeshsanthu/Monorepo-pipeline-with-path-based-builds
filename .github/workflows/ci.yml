@@ -39,10 +39,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm install
+          cache: "npm"
+
+      - run: node -v && npm -v
+      - run: npm i -g npm@10
+      - run: node -v && npm -v
+
+      - run: npm ci
       - run: npm test -w apps/app-a
 
   build_app_b:
@@ -54,5 +61,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm install
+          cache: "npm"
+      - run: node -v && npm -v
+      - run: npm i -g npm@10
+      - run: node -v && npm -v
+
+      - run: npm ci
       - run: npm test -w apps/app-b

@@ -16,3 +16,42 @@ jobs:
       global: ${{ steps.filter.outputs.global }}
     steps:
       - uses: actions/checkout@v4
+      - id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            app_a:
+              - 'apps/app-a/**'
+            app_b:
+              - 'apps/app-b/**'
+            shared:
+              - 'libs/shared/**'
+            global:
+              - 'package.json'
+              - 'package-lock.json'
+              - 'pnpm-lock.yaml'
+              - 'yarn.lock'
+              - '.github/workflows/**'
+ build_app_a:
+   needs: detect_changes
+   if: ${{ needs.detect_changes.outputs.app_a == 'true' || needs.detect_changes.outputs.shared == 'true' || needs.detect_changes.outputs.global == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install
+      - run: npm test -w apps/app-a
+ build_app_b:
+    needs: detect_changes
+    if: ${{ needs.detect_changes.outputs.app_b == 'true' || needs.detect_changes.outputs.shared == 'true' || needs.detect_changes.outputs.global == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install
+      - run: npm test -w apps/app-b
+

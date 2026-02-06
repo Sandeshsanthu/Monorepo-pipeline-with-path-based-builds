@@ -1,0 +1,13 @@
+{
+  "name": "@demo/app-a",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@demo/shared": "workspace:*"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node --test"
+  }
+}

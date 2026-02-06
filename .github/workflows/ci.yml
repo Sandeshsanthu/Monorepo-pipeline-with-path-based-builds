@@ -9,3 +9,10 @@ on:
 jobs:
   detect_changes:
     runs-on: ubuntu-latest
+    outputs:
+      app_a: ${{ steps.filter.outputs.app_a }}
+      app_b: ${{ steps.filter.outputs.app_b }}
+      shared: ${{ steps.filter.outputs.shared }}
+      global: ${{ steps.filter.outputs.global }}
+    steps:
+      - uses: actions/checkout@v4

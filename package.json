@@ -1,8 +1,45 @@
 {
-  "name": "monorepo-path-build-demo",
+  "name": "create-react-microservice",
+  "version": "0.0.0-development",
   "private": true,
+  "author": "Immonet dev team <aegaeon@immonet.de> (https://immonet.de)",
+  "license": "MIT",
+  "description": "Mono-repository for the create-react-microservice packages.",
+  "scripts": {
+    "create-react-microservice": "create-react-microservice",
+    "prepare": "yarn run bootstrap",
+    "precommit": "lint-staged && yarn test",
+    "clean": "yarn run clean:scaffold && yarn run clean:self",
+    "clean:self": "rimraf node_modules flow-typed/npm packages/*/{dist,coverage,flow-typed/npm,node_modules}",
+    "clean:scaffold": "cd packages/create-react-microservice-scaffold/src && yarn run clean",
+    "bootstrap": "flow-mono create-symlinks packages/create-react-microservice/.flowconfig && lerna run flow-typed-install && flow-mono create-stubs",
+    "test": "lerna run test --parallel",
+    "flow": "lerna run flow --parallel",
+    "lint": "lerna run lint --parallel",
+    "build": "lerna run build --parallel",
+    "build:watch": "lerna run build:watch --parallel"
+  },
+  "devDependencies": {
+    "@immowelt/styleguide-javascript": "1.0.11",
+    "@inkdpixels/commit-analyzer": "1.0.1",
+    "@inkdpixels/release-notes-generator": "1.0.1",
+    "flow-mono-cli": "1.5.3",
+    "husky": "0.14.3",
+    "lerna": "2.11.0",
+    "lint-staged": "6.1.1",
+    "prettier": "1.19.1",
+    "rimraf": "2.7.1",
+    "semantic-release": "8.2.3"
+  },
   "workspaces": [
-    "apps/*",
-    "libs/*"
-  ]
+    "packages/*"
+  ],
+  "release": {
+    "analyzeCommits": "@inkdpixels/commit-analyzer",
+    "generateNotes": "@inkdpixels/release-notes-generator"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ImmoweltGroup/create-react-microservice.git"
+  }
 }

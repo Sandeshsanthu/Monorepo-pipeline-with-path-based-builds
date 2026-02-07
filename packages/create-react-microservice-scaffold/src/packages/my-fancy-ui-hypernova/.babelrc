@@ -1,5 +1,0 @@
-{
-  "presets": [
-    "@immowelt/babel-preset-immowelt-node"
-  ]
-}

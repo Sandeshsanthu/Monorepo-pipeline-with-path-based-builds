@@ -1,8 +1,0 @@
-# dependencies
-node_modules
-
-# test results
-coverage
-
-# third party typings
-flow-typed/npm
